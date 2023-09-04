@@ -6,8 +6,8 @@ function Header() {
   return (
     <section className="Header">
       <h1>NC News</h1>
-      <h2>Subitle</h2>
-      <p>Logged in as {userProfile.username}</p>
+      <h2>Subtitle in Header Component</h2>
+      <p>Logged in as {userProfile.username} in Header Component</p>
     </section>
   );
 }

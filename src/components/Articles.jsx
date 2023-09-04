@@ -3,7 +3,9 @@ import { get_articles } from "../api";
 import axios from "axios";
 import Article from "./Article";
 
-function Articles() {
+function Articles(props) {
+  console.log(props);
+  const { num } = props;
   const [articles, setArticles] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(null);
@@ -16,6 +18,9 @@ function Articles() {
       .then((result) => {
         setLoaded(true);
         let data = result.data.articles;
+        if (num) {
+          console.log(num);
+        }
         setArticles(data);
       })
       .catch((error) => {
@@ -23,6 +28,9 @@ function Articles() {
       });
   }, []);
 
+  if (error) {
+    return <div className="error">Sorry - there has been a problem.</div>;
+  }
   if (!loaded) {
     return <div className="loading">Loading data...</div>;
   } else {
@@ -32,7 +40,7 @@ function Articles() {
           Showing {articles.length} article{articles.length === 1 ? "" : "s"}
         </p>
         {articles.map((article, i) => (
-          <Article key={`${article} - ${i}`} data={article} />
+          <Article key={`${article} - ${i}`} data={article} summary={true} />
         ))}
       </>
     );
