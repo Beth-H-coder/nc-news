@@ -8,3 +8,7 @@ export function get_articles() {
   return `${Api.articles}`;
 }
 //"https://nc-news-be-proj.onrender.com/api/articles"
+export function get_article(id) {
+  return `${Api.articles}/${id}`;
+}
+//"https://nc-news-be-proj.onrender.com/api/articles/1"
