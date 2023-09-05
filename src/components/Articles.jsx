@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { get_articles } from "../api";
+import { getArticles } from "../api";
 import axios from "axios";
 import Article from "./Article";
 
@@ -11,7 +11,7 @@ function Articles(props) {
 
   //refactor later to use custom hook
   useEffect(() => {
-    let url = get_articles();
+    let url = getArticles();
     axios
       .get(url)
       .then((result) => {
@@ -27,10 +27,11 @@ function Articles(props) {
   }, []);
 
   if (error) {
-    return <div className="error">Sorry - there has been a problem.</div>;
+    return <p className="error">Sorry - there has been a problem.</p>;
   }
   if (!loaded) {
-    return <div className="loading">Loading data...</div>;
+    return;
+    <p className="loading">Loading data...</p>;
   } else {
     return (
       <>

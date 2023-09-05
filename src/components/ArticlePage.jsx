@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { get_article } from "../api";
+import { getArticle } from "../api";
 import Article from "./Article";
 import axios from "axios";
 import { useFetch } from "../hooks/useFetch";
@@ -13,6 +13,7 @@ function ArticlePage() {
   const [article, setArticle] = useState();
 
   //TODO - below: refactoring for custom fetch hook
+  
   // let url = get_article(article_id);
   // const { data, error, loading } = useFetch(url)
 
@@ -37,7 +38,7 @@ function ArticlePage() {
   // };
 
   useEffect(() => {
-    let url = get_article(article_id);
+    let url = getArticle(article_id);
     axios
       .get(url)
       .then((result) => {
@@ -50,9 +51,9 @@ function ArticlePage() {
   }, []);
 
   if (error) {
-    return <div className="error">Sorry - there has been a problem.</div>;
+    return <p className="error">Sorry - there has been a problem.</p>;
   } else if (!loaded) {
-    return <div className="loading">Loading data...</div>;
+    return <p className="loading">Loading data...</p>;
   } else {
     return (
       <section>
