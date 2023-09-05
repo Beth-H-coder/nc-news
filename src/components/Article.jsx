@@ -1,6 +1,7 @@
 import { formatDate } from "../utils";
 import { Link } from "react-router-dom";
 import Comments from "./Comments";
+import Vote from "./Vote";
 
 function Article(props) {
   const { data, summary } = props;
@@ -12,6 +13,7 @@ function Article(props) {
       <h5>{formatDate(data.created_at)}</h5>
       <p>Comments: {data.comment_count}</p>
       {!summary && <p>{data.body}</p>}
+      <Vote voteCount={data.votes} id={data.article_id} />
       {summary && (
         <Link to={`/article/${data.article_id}`}>View full article</Link>
       )}

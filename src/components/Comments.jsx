@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { get_comments } from "../api";
+import { getComments } from "../api";
 import axios from "axios";
 import Comment from "./Comment";
 
@@ -11,7 +11,7 @@ function Comments(props) {
 
   //refactor later to custom hook
   useEffect(() => {
-    let url = get_comments(id);
+    let url = getComments(id);
 
     axios
       .get(url)
@@ -27,12 +27,12 @@ function Comments(props) {
 
   if (error) {
     return (
-      <div className="error">
+      <p className="error">
         Sorry - there has been a problem fetching the comments.
-      </div>
+      </p>
     );
   } else if (!loaded) {
-    return <div className="loading">Loading data...</div>;
+    return <p className="loading">Loading data...</p>;
   } else {
     return (
       <div className="comments">
