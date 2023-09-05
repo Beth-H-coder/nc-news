@@ -4,7 +4,6 @@ import axios from "axios";
 import Article from "./Article";
 
 function Articles(props) {
-  console.log(props);
   const { num } = props;
   const [articles, setArticles] = useState([]);
   const [loaded, setLoaded] = useState(false);
@@ -19,7 +18,6 @@ function Articles(props) {
         setLoaded(true);
         let data = result.data.articles;
         if (num) {
-          console.log(num);
         }
         setArticles(data);
       })

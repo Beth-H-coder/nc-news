@@ -12,3 +12,6 @@ export function get_article(id) {
   return `${Api.articles}/${id}`;
 }
 //"https://nc-news-be-proj.onrender.com/api/articles/1"
+export function get_comments(id) {
+  return `${Api.articles}/${id}/comments`;
+}
