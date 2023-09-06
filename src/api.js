@@ -1,34 +1,33 @@
-import axios from 'axios';
-
 const apiServer = "https://nc-news-be-proj.onrender.com/api";
 
-const Api = {
+const api = {
   articles: `${apiServer}/articles`,
+  topics: `${apiServer}/topics`,
 };
 
-export function getArticles() {
-  return `${Api.articles}`;
+export function getArticlesUrl() {
+  return `${api.articles}`;
 }
 
-export function getArticle(id) {
-  return `${Api.articles}/${id}`;
+export function getArticleUrl(id) {
+  return `${api.articles}/${id}`;
 }
 
-export function getComments(id) {
-  return `${Api.articles}/${id}/comments`;
+export function getCommentsUrl(id) {
+  return `${api.articles}/${id}/comments`;
 }
 
-export function voteOnArticle(id) {
-  return `${Api.articles}/${id}`;
+export function voteOnArticleUrl(id) {
+  return `${api.articles}/${id}`;
 }
 
-export function postComment(id) {
-  return `${Api.articles}/${id}/comments`;
+export function postCommentUrl(id) {
+  return `${api.articles}/${id}/comments`;
 }
 
-// export const axiosApiServer = axios.create({
-//   baseURL: 'https://nc-news-be-proj.onrender.com/api/articles',
-// });
+export function getTopicsUrl() {
+  return `${api.topics}`;
+}
 
 //  const apiServer = axios.create({"baseURL: https://nc-news-be-proj.onrender.com/api"});
 
