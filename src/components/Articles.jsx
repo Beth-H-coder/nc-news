@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { getArticlesUrl } from "../api";
 import axios from "axios";
 import Article from "./Article";
+import OrderBy from "./OrderBy";
+import SortBy from "./SortBy";
 
 function Articles(props) {
   const { num, subject } = props;
@@ -9,16 +11,31 @@ function Articles(props) {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(null);
 
+  //state
+  const [orderAsc, setOrderAsc] = useState(false);
+  const [sortBy, setSortBy] = useState("created_at");
   //refactor later to use custom hook
+
   useEffect(() => {
     let url = getArticlesUrl();
+
     let params = [];
 
+    //topic
     if (subject) {
       params = params.concat([`topic=${subject}`]);
     }
-    url = `${url}?${params.join("&")}`;
+    //asc or desc
+    if (orderAsc) {
+      params = params.concat([`order=asc`]);
+    }
+    //sort by date, votes, no. of comments
+    if (sortBy) {
+      params = params.concat([`sort_by=${sortBy}`]);
+    }
 
+    url = `${url}?${params.join("&")}`;
+    console.log(url);
     axios
       .get(url)
       .then((result) => {
@@ -32,20 +49,30 @@ function Articles(props) {
       .catch((error) => {
         setError(error);
       });
-  }, [subject]);
+  }, [subject, orderAsc, sortBy]);
+
+  const handleOrderBy = () => {
+    setOrderAsc(!orderAsc);
+  };
+
+  const handleSortBy = (event) => {
+    setSortBy(event.target.value);
+  };
 
   if (error) {
-    return <p className="error">Sorry - there has been a problem.</p>;
+    return <h4 className="error">Sorry - there has been a problem.</h4>;
   }
   if (!loaded) {
     return;
-    <p className="loading">Loading data...</p>;
+    <h4 className="loading">Loading data...</h4>;
   } else {
     return (
       <>
-        <p>
+        <OrderBy action={handleOrderBy} order={orderAsc} />
+        <SortBy action={handleSortBy} sort={sortBy} />
+        <h4>
           Showing {articles.length} article{articles.length === 1 ? "" : "s"}
-        </p>
+        </h4>
         {articles.map((article, i) => (
           <Article key={`${article} - ${i}`} data={article} summary={true} />
         ))}

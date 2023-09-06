@@ -11,7 +11,7 @@ function Article(props) {
       <h3>{data.title}</h3>
       <h4>{data.author}</h4>
       <h5>{formatDate(data.created_at)}</h5>
-      <p>Comments: {data.comment_count}</p>
+      <h5>Comments: {data.comment_count}</h5>
       {!summary && <p>{data.body}</p>}
       {!summary && <Vote voteCount={data.votes} id={data.article_id} />}
       {summary && (
