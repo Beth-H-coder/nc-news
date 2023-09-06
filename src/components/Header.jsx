@@ -1,13 +1,16 @@
 import { useContext } from "react";
 import UserProfileContext from "../userProfile/UserProfileContext";
-
+import { Link } from "react-router-dom";
 function Header() {
   const userProfile = useContext(UserProfileContext);
   return (
     <section className="Header">
-      <h1>NC News</h1>
-      <h2>Subtitle in Header Component</h2>
-      <p>Logged in as {userProfile.username} in Header Component</p>
+      <Link to="/">
+        <h1>NC News</h1>
+      </Link>
+      <em>
+        <p>Logged in as {userProfile.username}</p>
+      </em>
     </section>
   );
 }

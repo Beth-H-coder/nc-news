@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { getComments, postComment } from "../api";
+import { getCommentsUrl, postCommentUrl } from "../api";
 import axios from "axios";
 import Comment from "./Comment";
 import AddCommentForm from "./AddCommentForm";
@@ -16,7 +16,7 @@ function Comments(props) {
   //refactor later to custom hook
   //get comments
   useEffect(() => {
-    let url = getComments(id);
+    let url = getCommentsUrl(id);
     axios
       .get(url)
       .then((response) => {
@@ -27,24 +27,23 @@ function Comments(props) {
       .catch((error) => {
         setError(error);
       });
-  }, [id, comments]);
+  }, [id]);
 
   //add new comment
-  const handleNewComment = (event, target) => {
-    const message = target.current.value;
-    event.preventDefault();
-    let url = postComment(id);
+  const handleNewComment = (comment) => {
+    let url = postCommentUrl(id);
     axios
       .post(url, {
         username: userProfile.username,
-        body: message,
+        body: comment,
       })
       .then((result) => {
-        let newComment = result.data.comment[0].body;
+        let newComment = result.data.comment[0];
         setLoaded(true);
         setComments((prev) => [newComment, ...prev]);
-        target.current.value = "";
-        setSuccessMessage("Thanks for your comments - your post has been added!");
+        setSuccessMessage(
+          "Thanks for your comments - your post has been added!"
+        );
         setTimeout(() => {
           setSuccessMessage(null);
         }, 3000);

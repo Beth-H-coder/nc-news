@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getArticle } from "../api";
+import { getArticleUrl } from "../api";
 import Article from "./Article";
 import axios from "axios";
 import { useFetch } from "../hooks/useFetch";
@@ -38,7 +38,7 @@ function ArticlePage() {
   // };
 
   useEffect(() => {
-    let url = getArticle(article_id);
+    let url = getArticleUrl(article_id);
     axios
       .get(url)
       .then((result) => {
@@ -57,7 +57,6 @@ function ArticlePage() {
   } else {
     return (
       <section>
-        <h1>ArticlePage Component</h1>
         <Article data={article} />
       </section>
     );

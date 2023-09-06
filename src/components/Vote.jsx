@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { voteOnArticle } from "../api";
+import { voteOnArticleUrl } from "../api";
 import axios from "axios";
 
 function Vote(props) {
@@ -12,7 +12,7 @@ function Vote(props) {
     let newTotal = votesTotal + num;
     newTotal = newTotal < 0 ? 0 : newTotal;
     setVotesTotal(newTotal);
-    let url = voteOnArticle(id);
+    let url = voteOnArticleUrl(id);
     axios
       .patch(url, {
         inc_votes: num,

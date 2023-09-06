@@ -11,6 +11,7 @@ import AllArticles from "./components/AllArticles";
 import UserProfileContext from "./userProfile/UserProfileContext";
 import UserProfile from "./userProfile/UserProfile";
 import ArticlePage from "./components/ArticlePage";
+import Topic from "./components/Topic";
 
 function App() {
   const userProfile = UserProfile;
@@ -22,6 +23,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/all-articles" element={<AllArticles />} />
           <Route path="/article/:article_id" element={<ArticlePage />} />
+          <Route path="/topic/:topic" element={<Topic />} />
         </Route>
       </Routes>
     </UserProfileContext.Provider>

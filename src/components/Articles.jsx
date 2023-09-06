@@ -1,17 +1,24 @@
 import { useEffect, useState } from "react";
-import { getArticles } from "../api";
+import { getArticlesUrl } from "../api";
 import axios from "axios";
 import Article from "./Article";
 
 function Articles(props) {
-  const { num } = props;
+  const { num, subject } = props;
   const [articles, setArticles] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(null);
 
   //refactor later to use custom hook
   useEffect(() => {
-    let url = getArticles();
+    let url = getArticlesUrl();
+    let params = [];
+
+    if (subject) {
+      params = params.concat([`topic=${subject}`]);
+    }
+    url = `${url}?${params.join("&")}`;
+
     axios
       .get(url)
       .then((result) => {
@@ -25,7 +32,7 @@ function Articles(props) {
       .catch((error) => {
         setError(error);
       });
-  }, []);
+  }, [subject]);
 
   if (error) {
     return <p className="error">Sorry - there has been a problem.</p>;
