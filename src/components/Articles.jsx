@@ -18,6 +18,7 @@ function Articles(props) {
         setLoaded(true);
         let data = result.data.articles;
         if (num) {
+          data = data.splice(0, num);
         }
         setArticles(data);
       })

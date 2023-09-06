@@ -13,7 +13,7 @@ function ArticlePage() {
   const [article, setArticle] = useState();
 
   //TODO - below: refactoring for custom fetch hook
-  
+
   // let url = get_article(article_id);
   // const { data, error, loading } = useFetch(url)
 
