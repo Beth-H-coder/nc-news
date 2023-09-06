@@ -9,7 +9,7 @@ function Header() {
         <h1>NC News</h1>
       </Link>
       <em>
-        <p>Logged in as {userProfile.username}</p>
+        <h3>Logged in as {userProfile.username}</h3>
       </em>
     </section>
   );
