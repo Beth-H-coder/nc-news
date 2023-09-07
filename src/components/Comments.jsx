@@ -1,22 +1,22 @@
 import { useState, useEffect, useContext } from "react";
-import { getCommentsUrl, postCommentUrl } from "../api";
+import { getCommentsUrl, postCommentUrl, deleteCommentUrl } from "../api";
 import axios from "axios";
 import Comment from "./Comment";
 import AddCommentForm from "./AddCommentForm";
 import UserProfileContext from "../userProfile/UserProfileContext";
 
 function Comments(props) {
-  const { id } = props;
+  const { articleId } = props;
   const [comments, setComments] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(null);
   const userProfile = useContext(UserProfileContext);
-  const [successMessage, setSuccessMessage] = useState(null);
+  const [successPostMessage, setSuccessPostMessage] = useState(null);
+  const [deleteMessage, setDeleteMessage] = useState(null);
 
   //refactor later to custom hook
-  //get comments
   useEffect(() => {
-    let url = getCommentsUrl(id);
+    let url = getCommentsUrl(articleId);
     axios
       .get(url)
       .then((response) => {
@@ -27,11 +27,11 @@ function Comments(props) {
       .catch((error) => {
         setError(error);
       });
-  }, [id]);
+  }, [articleId]);
 
   //add new comment
-  const handleNewComment = (comment) => {
-    let url = postCommentUrl(id);
+  let handleNewComment = (comment) => {
+    let url = postCommentUrl(articleId);
     axios
       .post(url, {
         username: userProfile.username,
@@ -41,11 +41,32 @@ function Comments(props) {
         let newComment = result.data.comment[0];
         setLoaded(true);
         setComments((prev) => [newComment, ...prev]);
-        setSuccessMessage(
+        setSuccessPostMessage(
           "Thanks for your comments - your post has been added!"
         );
         setTimeout(() => {
-          setSuccessMessage(null);
+          setSuccessPostMessage(null);
+        }, 3000);
+      })
+      .catch((error) => {
+        setError(error);
+      });
+  };
+
+  //deleting a comment
+  const handleDelete = (event, comment_id) => {
+  
+    setComments((prev) => {
+      return prev.filter((comment) => comment.comment_id !== comment_id);
+    });
+    let url = deleteCommentUrl(comment_id);
+    axios
+      .delete(url)
+      .then((result) => {
+        setLoaded(true);
+        setDeleteMessage("Your comment has been deleted!");
+        setTimeout(() => {
+          setDeleteMessage(null);
         }, 3000);
       })
       .catch((error) => {
@@ -55,25 +76,33 @@ function Comments(props) {
 
   if (error) {
     return (
-      <p className="error">
+      <h4 className="error">
         Sorry - there has been a problem fetching the comments.
-      </p>
+      </h4>
     );
   } else if (!loaded) {
-    return <p className="loading">Loading data...</p>;
+    return <h4 className="loading">Loading data...</h4>;
+  } else if (deleteMessage) {
+    return <h4 className="comments-del">Your comments have been deleted!</h4>;
   } else {
     return (
-      <div className="comments">
-        {successMessage && (
-          <strong>
-            <p className="success-message">{successMessage}</p>
-          </strong>
-        )}
-        {<AddCommentForm action={handleNewComment} id={id} />}
-        {comments.map((comment, i) => (
-          <Comment key={`${comment} - ${i}`} data={comment} />
-        ))}
-      </div>
+      <section>
+        <div className="comments">
+          {successPostMessage && (
+            <strong>
+              <p className="success-message">{successPostMessage}</p>
+            </strong>
+          )}
+          {<AddCommentForm action={handleNewComment} />}
+          {comments.map((comment) => (
+            <Comment
+              key={comment.comment_id}
+              data={comment}
+              action={handleDelete}
+            />
+          ))}
+        </div>
+      </section>
     );
   }
 }

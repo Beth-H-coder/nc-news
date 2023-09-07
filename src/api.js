@@ -3,6 +3,8 @@ const apiServer = "https://nc-news-be-proj.onrender.com/api";
 const api = {
   articles: `${apiServer}/articles`,
   topics: `${apiServer}/topics`,
+  comments: `${apiServer}/comments`,
+  users: `${apiServer}/users`,
 };
 
 export function getArticlesUrl() {
@@ -29,6 +31,9 @@ export function getTopicsUrl() {
   return `${api.topics}`;
 }
 
+export function deleteCommentUrl(id) {
+  return `${api.comments}/${id}`;
+}
 //  const apiServer = axios.create({"baseURL: https://nc-news-be-proj.onrender.com/api"});
 
 //  apiServer.get('/articles')

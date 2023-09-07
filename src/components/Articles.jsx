@@ -35,7 +35,7 @@ function Articles(props) {
     }
 
     url = `${url}?${params.join("&")}`;
-    console.log(url);
+
     axios
       .get(url)
       .then((result) => {
@@ -63,8 +63,7 @@ function Articles(props) {
     return <h4 className="error">Sorry - there has been a problem.</h4>;
   }
   if (!loaded) {
-    return;
-    <h4 className="loading">Loading data...</h4>;
+    return <h4 className="loading">Loading data...</h4>;
   } else {
     return (
       <>

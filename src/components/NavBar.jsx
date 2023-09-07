@@ -27,7 +27,7 @@ function NavBar() {
     <section className="NavBar">
       <ul className="link">
         <li>
-          <Link to="/">Home</Link>
+          <Link className="home" to="/">NC News</Link>
         </li>
         <li>
           <Link to="/all-articles">All Articles</Link>
