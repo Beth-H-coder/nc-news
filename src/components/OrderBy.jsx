@@ -5,7 +5,7 @@ function OrderBy(props) {
   return (
     <div>
       <h4>
-        Order list:{" "}
+        Order list:{" "}{" "}
         <button className="button" onClick={action}>
           {label}
         </button>

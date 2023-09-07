@@ -265,7 +265,7 @@ ul .link {
 /* Additional button styles or other specific elements can be added here */
 .button {
   background-color: var(--magenta);
-  color: white;
+  color: var(black);
 }
 select {
   background-color: var(--hotmag);
@@ -279,11 +279,31 @@ select {
   width: 50%;
   /* other styles */
 }
-
+.comments {
+  color: var(--hotmag);
+  font-size: 1em;
+}
 /* Responsive styles for smaller screens */
 @media (max-width: 768px) {
   .some-element {
     width: 100%; /* Change to full width on smaller screens */
     /* other styles */
   }
+}
+
+@media (min-width: 850px) {
+  nav {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  nav li:first-child {
+    flex-basis: auto;
+    text-align: left;
+    margin-right: auto;
+  }
+.home .button {
+  background-color: var(--hotmag);
+}
+.NavBar a.home {
+  background-color: var(--hotmag);
 }

@@ -51,9 +51,9 @@ function ArticlePage() {
   }, []);
 
   if (error) {
-    return <p className="error">Sorry - there has been a problem.</p>;
+    return <h4 className="error">Sorry - there has been a problem.</h4>;
   } else if (!loaded) {
-    return <p className="loading">Loading data...</p>;
+    return <h4 className="loading">Loading data...</h4>;
   } else {
     return (
       <section>

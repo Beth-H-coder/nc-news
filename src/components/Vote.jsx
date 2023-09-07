@@ -11,6 +11,7 @@ function Vote(props) {
   const handleClick = (num) => {
     let newTotal = votesTotal + num;
     newTotal = newTotal < 0 ? 0 : newTotal;
+    //optimistically render and then call to server
     setVotesTotal(newTotal);
     let url = voteOnArticleUrl(id);
     axios
@@ -31,11 +32,11 @@ function Vote(props) {
   return (
     <div className="error-message">
       {error && (
-        <p>Sorry - we were unable to record your vote. Please try again!</p>
+        <h4>Sorry - we were unable to record your vote. Please try again!</h4>
       )}
       {!error && (
         <div className="success-message">
-          <p>{successMessage}</p>
+          <h4>{successMessage}</h4>
           <button
             className="button"
             onClick={() => handleClick(-1)}
