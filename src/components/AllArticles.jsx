@@ -1,5 +1,4 @@
 import Articles from "./Articles";
-
 function AllArticles() {
   return (
     <section>

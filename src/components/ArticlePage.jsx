@@ -46,24 +46,18 @@ function ArticlePage() {
         setArticle(result.data.article);
       })
       .catch((error) => {
-        setError(error);
+        setError(error.response.data.msg);
       });
   }, []);
 
-  if (error) {
-    return <h4 className="error">Sorry - there has been a problem.</h4>;
-  } 
-  else if (!loaded) {
-    return <h4 className="loading">Loading data...</h4>;
-  } else {
-    return (
-      <section>
-        <Article data={article} />
-      </section>
-    );
-  }
+  return (
+    <section>
+      {error && (
+        <h4 className="error">Sorry - there has been a problem. {error}.</h4>
+      )}
+      {!error && !loaded && <h4 className="loading">Loading data...</h4>}
+      {!error && loaded && <Article data={article} />}
+    </section>
+  );
 }
-
 export default ArticlePage;
-
-
