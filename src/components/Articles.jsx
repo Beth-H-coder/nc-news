@@ -59,24 +59,24 @@ function Articles(props) {
     setSortBy(event.target.value);
   };
 
-  if (error) {
-    return <h4 className="error">Sorry - there has been a problem.</h4>;
+  {
+    error && <h4 className="error">Sorry - there has been a problem.</h4>;
   }
-  if (!loaded) {
-    return <h4 className="loading">Loading data...</h4>;
-  } else {
-    return (
-      <>
-        <OrderBy action={handleOrderBy} order={orderAsc} />
-        <SortBy action={handleSortBy} sort={sortBy} />
-        <h4>
-          Showing {articles.length} article{articles.length === 1 ? "" : "s"}
-        </h4>
-        {articles.map((article, i) => (
-          <Article key={`${article} - ${i}`} data={article} summary={true} />
-        ))}
-      </>
-    );
+  {
+    !loaded && <h4 className="loading">Loading data...</h4>;
   }
+  return (
+    <>
+      <OrderBy action={handleOrderBy} order={orderAsc} />
+      <SortBy action={handleSortBy} sort={sortBy} />
+      <h4>
+        Showing {articles.length} article{articles.length === 1 ? "" : "s"}
+      </h4>
+      <div className="gradient"></div>
+      {articles.map((article, i) => (
+        <Article key={`${article} - ${i}`} data={article} summary={true} />
+      ))}
+    </>
+  );
 }
 export default Articles;
