@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { getCommentsUrl, postCommentUrl, deleteCommentUrl } from "../api";
 import axios from "axios";
 import Comment from "./Comment";
+import Modal from "./Modal";
 import AddCommentForm from "./AddCommentForm";
 import UserProfileContext from "../userProfile/UserProfileContext";
 
@@ -13,6 +14,7 @@ function Comments(props) {
   const userProfile = useContext(UserProfileContext);
   const [successPostMessage, setSuccessPostMessage] = useState(null);
   const [deleteMessage, setDeleteMessage] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   //refactor later to custom hook
   useEffect(() => {
@@ -55,7 +57,6 @@ function Comments(props) {
 
   //deleting a comment
   const handleDelete = (event, comment_id) => {
-  
     setComments((prev) => {
       return prev.filter((comment) => comment.comment_id !== comment_id);
     });
@@ -101,6 +102,8 @@ function Comments(props) {
               action={handleDelete}
             />
           ))}
+          
+        
         </div>
       </section>
     );
