@@ -75,39 +75,66 @@ function Comments(props) {
       });
   };
 
-  if (error) {
-    return (
-      <h4 className="error">
-        Sorry - there has been a problem fetching the comments.
-      </h4>
-    );
-  } else if (!loaded) {
-    return <h4 className="loading">Loading data...</h4>;
-  } else if (deleteMessage) {
-    return <h4 className="comments-del">Your comments have been deleted!</h4>;
-  } else {
-    return (
-      <section>
-        <div className="comments">
-          {successPostMessage && (
-            <strong>
-              <p className="success-message">{successPostMessage}</p>
-            </strong>
-          )}
-          {<AddCommentForm action={handleNewComment} />}
-          {comments.map((comment) => (
-            <Comment
-              key={comment.comment_id}
-              data={comment}
-              action={handleDelete}
-            />
-          ))}
-          
-        
-        </div>
-      </section>
-    );
-  }
+  return (
+    <section>
+      {error && (
+        <h4 className="error">
+          Sorry - there has been a problem fetching the comments.
+        </h4>
+      )}
+      {!loaded && <h4 className="loading">Loading data...</h4>}
+      {deleteMessage && <h4 className="comments-del">{deleteMessage}</h4>}
+
+      <div className="comments">
+        {successPostMessage && (
+          <strong>
+            <p className="success-message">{successPostMessage}</p>
+          </strong>
+        )}
+        <AddCommentForm action={handleNewComment} />
+        {comments.map((comment) => (
+          <Comment
+            key={comment.comment_id}
+            data={comment}
+            action={handleDelete}
+          />
+        ))}
+      </div>
+    </section>
+  );
 }
 
 export default Comments;
+// return
+//   if (error) {
+//     return (
+//       <h4 className="error">
+//         Sorry - there has been a problem fetching the comments.
+//       </h4>
+//     );
+//   } else if (!loaded) {
+//     return <h4 className="loading">Loading data...</h4>;
+//   } else if (deleteMessage) {
+//     return <h4 className="comments-del">Your comments have been deleted!</h4>;
+//   } else {
+//     return (
+//       <section>
+//         <div className="comments">
+//           {successPostMessage && (
+//             <strong>
+//               <p className="success-message">{successPostMessage}</p>
+//             </strong>
+//           )}
+//           {<AddCommentForm action={handleNewComment} />}
+//           {comments.map((comment) => (
+//             <Comment
+//               key={comment.comment_id}
+//               data={comment}
+//               action={handleDelete}
+//             />
+//           ))}
+
+//         </div>
+//       </section>
+//     );
+//   }

@@ -4,6 +4,7 @@ import axios from "axios";
 
 function Vote(props) {
   const { voteCount, id } = props;
+
   const [votesTotal, setVotesTotal] = useState(voteCount);
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
@@ -19,21 +20,21 @@ function Vote(props) {
         inc_votes: num,
       })
       .then((result) => {
-        setSuccessMessage("Your vote was successful!");
+        setSuccessMessage("Thanks for your vote!");
         setTimeout(() => {
           setSuccessMessage(null);
         }, 3000);
       })
       .catch((error) => {
-        setError(error);
+        setError(
+          "Sorry - we were unable to record your vote. Please try again!"
+        );
       });
   };
 
   return (
     <div className="error-message">
-      {error && (
-        <h4>Sorry - we were unable to record your vote. Please try again!</h4>
-      )}
+      {error && <h4>{error}</h4>}
       {!error && (
         <div className="success-message">
           <h4>{successMessage}</h4>

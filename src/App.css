@@ -171,7 +171,7 @@ select {
 
 /* Base styles for larger screens */
 .some-element {
-  width: 50%;
+  width: 100%;
   /* other styles */
 }
 
@@ -182,7 +182,7 @@ select {
 
 /* Responsive styles for smaller screens */
 @media (max-width: 768px) {
-  .some-element {
+  .body {
     width: 100%; /* Change to full width on smaller screens */
     /* other styles */
   }

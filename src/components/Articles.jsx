@@ -25,6 +25,7 @@ function Articles(props) {
     if (subject) {
       params = params.concat([`topic=${subject}`]);
     }
+    console.log(params);
     //asc or desc
     if (orderAsc) {
       params = params.concat([`order=asc`]);
@@ -35,19 +36,22 @@ function Articles(props) {
     }
 
     url = `${url}?${params.join("&")}`;
+    console.log(url);
 
     axios
       .get(url)
       .then((result) => {
         setLoaded(true);
         let data = result.data.articles;
+        console.log(data);
         if (num) {
           data = data.splice(0, num);
         }
         setArticles(data);
       })
       .catch((error) => {
-        setError(error);
+        console.log(error.response.data.msg);
+        setError(error.response.data.msg);
       });
   }, [subject, orderAsc, sortBy]);
 
@@ -59,24 +63,46 @@ function Articles(props) {
     setSortBy(event.target.value);
   };
 
-  {
-    error && <h4 className="error">Sorry - there has been a problem.</h4>;
-  }
-  {
-    !loaded && <h4 className="loading">Loading data...</h4>;
-  }
   return (
     <>
-      <OrderBy action={handleOrderBy} order={orderAsc} />
-      <SortBy action={handleSortBy} sort={sortBy} />
-      <h4>
-        Showing {articles.length} article{articles.length === 1 ? "" : "s"}
-      </h4>
-      <div className="gradient"></div>
-      {articles.map((article, i) => (
-        <Article key={`${article} - ${i}`} data={article} summary={true} />
-      ))}
+      {error && (
+        <h4 className="error">Sorry - there has been a problem. {error}</h4>
+      )}
+      {!loaded && <h4 className="loading">Loading data...</h4>}
+      {loaded && (
+        <>
+          <OrderBy action={handleOrderBy} order={orderAsc} />
+          <SortBy action={handleSortBy} sort={sortBy} />
+          <h4>
+            Showing {articles.length} article{articles.length === 1 ? "" : "s"}
+          </h4>
+          <div className="gradient"></div>
+          {articles.map((article, i) => (
+            <Article key={`${article} - ${i}`} data={article} summary={true} />
+          ))}
+        </>
+      )}
     </>
   );
+  // return
+  // {
+  //   error && <h4 className="error">Sorry - there has been a problem.</h4>;
+  // }
+  // {
+  //   !loaded && <h4 className="loading">Loading data...</h4>;
+  // }
+  // return (
+  //   <>
+  //     <OrderBy action={handleOrderBy} order={orderAsc} />
+  //     <SortBy action={handleSortBy} sort={sortBy} />
+  //     <h4>
+  //       Showing {articles.length} article{articles.length === 1 ? "" : "s"}
+  //     </h4>
+  //     <div className="gradient"></div>
+  //     {articles.map((article, i) => (
+  //       <Article key={`${article} - ${i}`} data={article} summary={true} />
+  //     ))}
+  //   </>
+  // );
 }
 export default Articles;
