@@ -12,4 +12,4 @@ The interface is designed to be intuitive and easy to navigate so it's simple fo
 
 ## Project Screenshot
 
-![Screenshot of the site](resources/nc-news-actual.png)
+![Screenshot of the site](./src/resources/nc-news-actual.png)
