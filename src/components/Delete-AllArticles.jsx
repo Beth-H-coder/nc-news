@@ -9,5 +9,3 @@ function AllArticles() {
 }
 
 export default AllArticles;
-
-//Ben - to delete - changed route app.js, imports changed
