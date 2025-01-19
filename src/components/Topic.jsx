@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import { capitaliseString } from "../utils";
 import Articles from "./Articles";
 
 function Topic() {
@@ -7,7 +6,6 @@ function Topic() {
 
   return (
     <section>
-      <h1>{capitaliseString(topic)}</h1>
       <Articles subject={topic} />
     </section>
   );

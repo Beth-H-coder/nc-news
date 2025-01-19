@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { capitaliseString } from "../utils";
 import { getTopicsUrl } from "../api";
+import UserProfileContext from "../userProfile/UserProfileContext";
+import { useContext } from "react";
 import axios from "axios";
 
 function NavBar() {
@@ -24,40 +26,91 @@ function NavBar() {
   }, []);
 
   return (
-    <section className="NavBar">
-      <ul className="link">
-        <li>
-          <Link className="home" to="/">
-            NC News
-          </Link>
-        </li>
-        <li>
-          <Link to="/all-articles">All Articles</Link>
-        </li>
-        {!loaded && ( // 1 Loading
-          <li>Loading...</li>
-        )}
-        {loaded &&
-          error && ( // 2 Error
-            <li>Unable to retrieve topics</li>
+    <nav className="bg-gray-800 pb-5">
+      <div className="container mx-auto grid grid-cols-1 items-center">
+        <ul className="flex justify-end space-x-12">
+          <li>
+            <Link
+              className="text-gray-200 text-2xl hover:text-red-500 transition duration-500 ease-in-out m-2"
+              to="/articles"
+            >
+              All Articles
+            </Link>
+          </li>
+          {!loaded && ( // 1 Loading
+            <li>
+              <div
+                className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                role="status"
+              >
+                <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+                  Loading...
+                </span>
+              </div>
+            </li>
           )}
-        {loaded &&
-          !error && ( // 3 Success
-            <>
-              {topics.map((topic, i) => (
-                <li key={i}>
-                  <Link to={`/topic/${topic.slug}`}>
-                    {capitaliseString(topic.slug)}
-                  </Link>
-                </li>
-              ))}
-            </>
-          )}
-      </ul>
-    
-      
-    </section>
+          {loaded &&
+            error && ( // 2 Error
+              <li>
+                <span className="text-white">Unable to retrieve topics</span>
+              </li>
+            )}
+          {loaded &&
+            !error && // 3 Success
+            topics.map((topic) => (
+              <li key={topic}>
+                <Link
+                  className="text-gray-200 text-2xl hover:text-red-500 transition duration-500 ease-in-out m-2"
+                  to={`/topic/${topic.slug}`}
+                >
+                  {capitaliseString(topic.slug)}
+                </Link>
+              </li>
+            ))}
+        </ul>
+      </div>
+    </nav>
   );
 }
 
 export default NavBar;
+
+{
+  /* <section className="NavBar">
+<ul className="link">
+  <li>
+    <Link to="/">NC News</Link>
+  </li>
+  <li>
+    <Link
+      className="border border-red-500 bg-red-500 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-green-600 focus:outline-none focus:shadow-outline p-6"
+      to="/articles"
+    >
+      All Articles
+    </Link>
+  </li>
+  {!loaded && ( // 1 Loading
+    <li>Loading...</li>
+  )}
+  {loaded &&
+    error && ( // 2 Error
+      <li>Unable to retrieve topics</li>
+    )}
+  {loaded &&
+    !error && ( // 3 Success
+      <>
+        {topics.map((topic, i) => (
+          <li key={i}>
+            <Link
+              className="border border-green-500 bg-green-500 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-green-600 focus:outline-none focus:shadow-outline p-6"
+              to={`/topic/${topic.slug}`}
+            >
+              {capitaliseString(topic.slug)}
+            </Link>
+          </li>
+        ))}
+      </>
+    )}
+</ul>
+</section> */
+}

@@ -1,8 +1,8 @@
 function Footer() {
   return (
-    <section className="Footer">
-      <h3>&copy; 2023</h3>
-    </section>
+    <footer className="Footer m-6 p-2">
+      <h3>&copy; 2024 </h3>
+    </footer>
   );
 }
 

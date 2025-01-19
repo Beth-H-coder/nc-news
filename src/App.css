@@ -95,7 +95,7 @@ a {
   margin: 0 auto 60px;
   gap: 10px;
   padding: 1rem;
-  position: sticky;
+  
   top: 0;
   z-index: 100;
 }

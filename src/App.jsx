@@ -1,29 +1,31 @@
-import "./App.css";
+//import "./App.css";
 import { Routes, Route } from "react-router-dom";
 
 //Components
-import Header from "./components/Header";
-import NavBar from "./components/NavBar";
-import Footer from "./components/Footer";
 import Layout from "./components/Layout";
 import Home from "./components/Home";
-import AllArticles from "./components/AllArticles";
+import Articles from "./components/Articles";
 import UserProfileContext from "./userProfile/UserProfileContext";
 import UserProfile from "./userProfile/UserProfile";
-import ArticlePage from "./components/ArticlePage";
+import ArticleCommentsPage from "./components/ArticleCommentsPage";
 import Topic from "./components/Topic";
+import NotFound from "./components/NotFound";
 
 function App() {
   const userProfile = UserProfile;
 
   return (
-    <UserProfileContext.Provider value={UserProfile}>
+    <UserProfileContext.Provider value={userProfile}>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/all-articles" element={<AllArticles />} />
-          <Route path="/article/:article_id" element={<ArticlePage />} />
+          <Route path="/articles" element={<Articles />} />
+          <Route
+            path="/article/:article_id"
+            element={<ArticleCommentsPage />}
+          />
           <Route path="/topic/:topic" element={<Topic />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </UserProfileContext.Provider>

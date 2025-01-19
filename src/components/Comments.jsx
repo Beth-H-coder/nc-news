@@ -1,24 +1,25 @@
 import { useState, useEffect, useContext } from "react";
-import { getCommentsUrl, postCommentUrl, deleteCommentUrl } from "../api";
+import { getCommentsUrl, postCommentUrl } from "../api";
 import axios from "axios";
 import Comment from "./Comment";
 import Modal from "./Modal";
 import AddCommentForm from "./AddCommentForm";
 import UserProfileContext from "../userProfile/UserProfileContext";
 
-function Comments(props) {
-  const { articleId } = props;
+function Comments({ articleId }) {
   const [comments, setComments] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(null);
   const userProfile = useContext(UserProfileContext);
   const [successPostMessage, setSuccessPostMessage] = useState(null);
-  const [deleteMessage, setDeleteMessage] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
-  //refactor later to custom hook
+  //get comments data
+  // const { data: comments, loading, error } = useFetch(getCommentsUrl(articleId));
   useEffect(() => {
     let url = getCommentsUrl(articleId);
+
+    //server
     axios
       .get(url)
       .then((response) => {
@@ -43,11 +44,11 @@ function Comments(props) {
         let newComment = result.data.comment[0];
         setLoaded(true);
         setComments((prev) => [newComment, ...prev]);
-        setSuccessPostMessage(
-          "Thanks for your comments - your post has been added!"
-        );
+        setSuccessPostMessage("Thanks! Your comments have been added!");
+        setShowModal(true);
         setTimeout(() => {
           setSuccessPostMessage(null);
+          setShowModal(false);
         }, 3000);
       })
       .catch((error) => {
@@ -56,85 +57,49 @@ function Comments(props) {
   };
 
   //deleting a comment
-  const handleDelete = (event, comment_id) => {
+  const handleDelete = (comment_id) => {
     setComments((prev) => {
       return prev.filter((comment) => comment.comment_id !== comment_id);
     });
-    let url = deleteCommentUrl(comment_id);
-    axios
-      .delete(url)
-      .then((result) => {
-        setLoaded(true);
-        setDeleteMessage("Your comment has been deleted!");
-        setTimeout(() => {
-          setDeleteMessage(null);
-        }, 3000);
-      })
-      .catch((error) => {
-        setError(error);
-      });
   };
 
   return (
     <section>
+      <div className="text-gray-500 font-bold m-10">
+        <h4>COMMENTS</h4>
+        <h5 className="pt-2 text-gray-400">Join the conversation</h5>
+      </div>
       {error && (
         <h4 className="error">
           Sorry - there has been a problem fetching the comments.
         </h4>
       )}
       {!loaded && <h4 className="loading">Loading data...</h4>}
-      {deleteMessage && <h4 className="comments-del">{deleteMessage}</h4>}
 
-      <div className="comments">
-        {successPostMessage && (
-          <strong>
-            <p className="success-message">{successPostMessage}</p>
-          </strong>
-        )}
+      <div className="">
         <AddCommentForm action={handleNewComment} />
-        {comments.map((comment) => (
-          <Comment
-            key={comment.comment_id}
-            data={comment}
-            action={handleDelete}
-          />
-        ))}
+        {showModal && (
+          <Modal>
+            <h4 className="text-gray-700 font-semibold">
+              {successPostMessage}
+            </h4>
+          </Modal>
+        )}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mx-8 p-6 pt-0">
+          {comments &&
+            comments.map((comment) => (
+              <div key={comment.comment_id}>
+                <Comment
+                  data={comment}
+                  username={userProfile.username}
+                  onDelete={handleDelete}
+                />
+              </div>
+            ))}
+        </div>
       </div>
     </section>
   );
 }
 
 export default Comments;
-// return
-//   if (error) {
-//     return (
-//       <h4 className="error">
-//         Sorry - there has been a problem fetching the comments.
-//       </h4>
-//     );
-//   } else if (!loaded) {
-//     return <h4 className="loading">Loading data...</h4>;
-//   } else if (deleteMessage) {
-//     return <h4 className="comments-del">Your comments have been deleted!</h4>;
-//   } else {
-//     return (
-//       <section>
-//         <div className="comments">
-//           {successPostMessage && (
-//             <strong>
-//               <p className="success-message">{successPostMessage}</p>
-//             </strong>
-//           )}
-//           {<AddCommentForm action={handleNewComment} />}
-//           {comments.map((comment) => (
-//             <Comment
-//               key={comment.comment_id}
-//               data={comment}
-//               action={handleDelete}
-//             />
-//           ))}
-
-//         </div>
-//       </section>
-//     );
-//   }

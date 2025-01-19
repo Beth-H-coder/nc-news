@@ -5,7 +5,7 @@ import Footer from "./Footer";
 
 function Layout() {
   return (
-    <div>
+    <div className="bg-white-600">
       <Header />
       <NavBar />
       <Outlet />
