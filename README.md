@@ -1,6 +1,6 @@
 ## Welcome to NC News
 
-Find the deployed version here:https://daily-stack.netlify.app/
+Find the deployed version here: https://daily-stack.netlify.app/
 
 This app is a mock news site built with React, Vite, and Tailwind, communicating with a Node.js backend.
 
